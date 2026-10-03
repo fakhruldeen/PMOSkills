@@ -4,11 +4,11 @@ import { SkillsCatalog } from './components/SkillsCatalog';
 import { ProcessCatalog } from './components/ProcessCatalog';
 import { ArtifactCatalog } from './components/ArtifactCatalog';
 import { ReferenceViewer } from './components/ReferenceViewer';
-import { Home, Play, Layers, FileText, BookOpen, Box, ExternalLink } from 'lucide-react';
+import { Home, Play, Layers, FileText, BookOpen, Box, ExternalLink, Sparkles, AlertCircle } from 'lucide-react';
 import './App.css';
 
-// Import the pre-compiled database directly into the bundle
-import store from '../../sdk/npm/src/db/store.json';
+// Import the pre-compiled database directly into the bundle from archive
+import store from '../../archive/sdk/npm/src/db/store.json';
 
 // Convert the database objects into simple arrays
 const skillsList = Object.values(store.skills).map((skill: any) => ({
@@ -95,9 +95,9 @@ export default function App() {
   return (
     <div className="app-container">
       {/* Sidebar Navigation */}
-      <aside className="glass" style={{ width: '280px', display: 'flex', flexDirection: 'column', height: '100vh', borderRight: '1px solid var(--border-color)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
-        {/* Logo */}
-        <div style={{ padding: '1.75rem', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <aside className="glass" style={{ width: '280px', display: 'flex', flexDirection: 'column', height: '100vh', borderRight: '1px solid var(--border-color)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, flexShrink: 0 }}>
+        {/* Logo & Header */}
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
             background: 'linear-gradient(135deg, var(--color-ref) 0%, var(--color-skill) 100%)',
             width: '32px',
@@ -108,14 +108,49 @@ export default function App() {
             justifyContent: 'center',
             fontWeight: 800,
             fontSize: '0.95rem',
-            color: '#000000'
+            color: '#000000',
+            flexShrink: 0
           }}>
             PM
           </div>
           <div>
-            <h2 style={{ fontSize: '1.15rem', color: '#ffffff', lineHeight: 1 }}>PMOSkills</h2>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>v0.5.1 Explorer</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <h2 style={{ fontSize: '1.1rem', color: '#ffffff', lineHeight: 1 }}>PMOSkills</h2>
+              <span style={{ fontSize: '0.65rem', background: 'rgba(239, 68, 68, 0.25)', color: '#fca5a5', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
+                ARCHIVE
+              </span>
+            </div>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>v1 Historical Explorer</span>
           </div>
+        </div>
+
+        {/* Featured Project Callout in Sidebar */}
+        <div style={{ padding: '0.9rem 1rem', borderBottom: '1px solid var(--border-color)', background: 'rgba(249, 115, 22, 0.06)' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-skill)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <Sparkles size={12} /> Active New Project
+          </div>
+          <a
+            href="https://github.com/fakhruldeen/Tasleemat"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '0.5rem 0.65rem',
+              background: 'rgba(249, 115, 22, 0.15)',
+              border: '1px solid rgba(249, 115, 22, 0.3)',
+              borderRadius: '6px',
+              color: '#ffffff',
+              textDecoration: 'none',
+              fontSize: '0.82rem',
+              fontWeight: 600,
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <span>Tasleemat (تسليمات)</span>
+            <ExternalLink size={12} />
+          </a>
         </div>
 
         {/* Navigation list */}
@@ -138,7 +173,7 @@ export default function App() {
               transition: 'all 0.15s'
             }}
           >
-            <Home size={18} /> Dashboard
+            <Home size={18} /> Overview & Notice
           </button>
           
           <button 
@@ -160,7 +195,7 @@ export default function App() {
             }}
           >
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Play size={18} /> Executable Skills
+              <Play size={18} /> Archived Skills
             </span>
             <span className="badge badge-skill" style={{ fontSize: '0.65rem', padding: '2px 6px' }}>{stats.skills}</span>
           </button>
@@ -269,6 +304,48 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="main-content">
+        {/* Global Archival Notification Header Bar */}
+        <div style={{
+          background: 'linear-gradient(90deg, rgba(239, 68, 68, 0.12) 0%, rgba(249, 115, 22, 0.12) 50%, rgba(56, 189, 248, 0.12) 100%)',
+          border: '1px solid rgba(249, 115, 22, 0.3)',
+          borderRadius: '10px',
+          padding: '0.75rem 1.25rem',
+          marginBottom: '1.25rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          flexShrink: 0
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.88rem' }}>
+            <AlertCircle size={17} style={{ color: '#f97316', flexShrink: 0 }} />
+            <span style={{ color: 'var(--text-primary)' }}>
+              <strong>Notice:</strong> This repository and web explorer are archived. PMOSkills is being updated to new projects matching modern development approaches & real-life scenarios.
+            </span>
+          </div>
+          <a
+            href="https://github.com/fakhruldeen/Tasleemat"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.4rem 0.85rem',
+              background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+              color: '#ffffff',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 2px 8px rgba(249, 115, 22, 0.35)'
+            }}
+          >
+            🌟 View Tasleemat <ExternalLink size={12} />
+          </a>
+        </div>
+
         {activeTab === 'home' && <Landing onNavigate={setActiveTab} stats={stats} />}
         {activeTab === 'skills' && <SkillsCatalog skills={skillsList} selectedSkillId={selectedSkillId} setSelectedSkillId={setSelectedSkillId} />}
         {activeTab === 'processes' && <ProcessCatalog processes={processesList} onNavigateToSkill={handleNavigateToSkill} />}
